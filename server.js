@@ -1,12 +1,14 @@
 /*********************************************************************************
- *  WEB322 – Assignment 03** I declare that this assignment is my own work in accordance with Seneca's* 
+ *  WEB322 – Assignment 04** I declare that this assignment is my own work in accordance with Seneca's* 
  * Academic Integrity Policy:** https://www.senecacollege.ca/about/policies/academic-integrity-policy.html**
- *  Name: _______________Leo Ru_______ Student ID: _____144337227_________ Date: ____Oct 11,2023__________** 
- * Published URL: ___________________________________________________________
+ *  Name: _______________Leo Ru_______ Student ID: _____144337227_________ Date: ____Oct 31,2023__________** 
+ * Published URL: __________________________________https://dull-gray-snail-tutu.cyclic.app
+
  * *********************************************************************************/
 
 const express = require("express");
 const app = express();
+app.set("view engine", "ejs");
 const HTTP_PORT = process.env.PORT || 8080;
 const path = require("path");
 const legoData = require("./modules/legoSets");
@@ -14,12 +16,12 @@ app.use(express.static("public"));
 
 app.get("/", (req, res) => {
   const filepath = path.join(__dirname, "views", "home.html");
-  res.sendFile(filepath);
+  res.render("home");
 });
 
 app.get("/about", (req, res) => {
   const filepath = path.join(__dirname, "views", "about.html");
-  res.sendFile(filepath);
+  res.render("about");
 });
 
 app.get("/lego/sets", async (req, res) => {
@@ -31,14 +33,17 @@ app.get("/lego/sets", async (req, res) => {
       if (filteredData.length === 0) {
         res.status(404);
       } else {
-        res.send(filteredData);
+        // res.send(filteredData);
+        res.render("sets", { sets: filteredData });
       }
     } else {
       const allData = await legoData.getAllSets();
-      res.send(allData);
+      //res.send(allData);
+      res.render("sets", { sets: allData });
     }
   } catch (err) {
-    res.status(404).send("Error: Unable to find requested set");
+    //res.status(404).render("404", {message: "Unable to find requested sets."});
+    res.status(404).render("404", { message: "Unable to find requested set." });
   }
 });
 
@@ -48,17 +53,27 @@ app.get("/lego/sets/:setNum", async (req, res) => {
 
     const legodata = await legoData.getSetByNum(setNum);
     if (legodata) {
-      res.send(legodata);
+      //  res.send(legodata);
+      res.render("set", { sets: legodata });
     }
   } catch (err) {
-    res.status(404).send("Error:  Unable to find requested set");
+    // res.status(404).send("Error:  Unable to find requested set");
+    res
+      .status(404)
+      .render("404", { message: "Unable to find requested sets." });
   }
 });
-app.use((req, res, next) => {
-  res.status(404);
-  const filepath = path.join(__dirname, "views", "404.html");
 
-  res.sendFile(filepath);
+app.use((req, res, next) => {
+  //res.status(404);
+  // const filepath = path.join(__dirname, "views", "404.html");
+
+  //res.render("404");
+  res
+    .status(404)
+    .render("404", {
+      message: "I'm sorry, we're unable to find what you're looking for.",
+    });
 });
 
 legoData

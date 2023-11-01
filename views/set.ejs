@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Me</title>
+    <link rel="stylesheet" href="/css/main.css" />
+  </head>
+  <body>
+    <%- include('partials/navbar', {page: ''}) %>
+
+    <div class="container mx-auto">
+      <div class="hero bg-base-200 rounded-lg p-6">
+        <div class="hero-content text-center">
+          <div class="max-w-md">
+            <h1 class="text-5xl font-bold"><%= sets.name %></h1>
+            <p class="py-6">
+              Below, you will find detailed information about the set: <%=
+              sets.name %>
+            </p>
+          </div>
+        </div>
+      </div>
+      <br />
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <img
+            class="w-full rounded-lg"
+            src="<%= sets.img_url %>"
+            alt="Image not Available"
+          />
+        </div>
+        <div class="prose">
+          <p>
+            <strong>Set Name: </strong><%= sets.name %><br />
+            <strong>Year Released: </strong> <%= sets.year %><br />
+            <strong>Theme: </strong> <%= sets.theme %><br />
+            <strong>Number of Parts: </strong> <%= sets.num_parts %>
+          </p>
+          <div id="quote">
+            <!-- Fetched quote content and author will be displayed here -->
+          </div>
+          <button>
+            <a
+              class="btn btn-primary"
+              href="#"
+              onclick="history.back(); return false;"
+              >Back</a
+            >
+          </button>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        /* TODO: "fetch" the data at: https://quotable.io/random and update an element in the DOM with the"content" and "author" */
+        const quoteContainer = document.getElementById("quote");
+
+        fetch("https://quotable.io/random")
+          .then((response) => response.json())
+          .then((data) => {
+            const { content, author } = data;
+
+            quoteContainer.innerHTML = `
+        <p>"${content}<br>-${author}"</p>
+  
+    `;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+    </script>
+  </body>
+</html>
