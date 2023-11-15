@@ -8,7 +8,10 @@
   </head>
   <body>
     <%- include('partials/navbar', {page: ''}) %>
+    
 
+
+<!-- ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss -->
     <div class="container mx-auto">
       <div class="hero bg-base-200 rounded-lg p-6">
         <div class="hero-content text-center">
@@ -35,7 +38,7 @@
           <p>
             <strong>Set Name: </strong><%= sets.name %><br />
             <strong>Year Released: </strong> <%= sets.year %><br />
-            <strong>Theme: </strong> <%= sets.theme %><br />
+            <strong>Theme: </strong> <%= sets.Theme.name %><br />
             <strong>Number of Parts: </strong> <%= sets.num_parts %>
           </p>
           <div id="quote">
@@ -47,6 +50,14 @@
               href="#"
               onclick="history.back(); return false;"
               >Back</a
+            >
+          </button>
+          <button>
+            <a
+              class="btn btn-success"
+              href="/lego/editSet/<%=sets.set_num %>"
+             
+              >Edit</a
             >
           </button>
         </div>
