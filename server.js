@@ -46,7 +46,7 @@ app.get("/lego/sets", async (req, res) => {
     }
   } catch (err) {
     //res.status(404).render("404", {message: "Unable to find requested sets."});
-    res.status(404).render("404", { message: "Unable to find requested set." });
+    res.status(404).render("404", { message: "Unable to find requested sets." });
   }
 });
 
@@ -63,7 +63,7 @@ app.get("/lego/sets/:setNum", async (req, res) => {
     // res.status(404).send("Error:  Unable to find requested set");
     res
       .status(404)
-      .render("404", { message: "Unable to find requested sets." });
+      .render("404", { message: "Unable to find requested set." });
   }
 });
 

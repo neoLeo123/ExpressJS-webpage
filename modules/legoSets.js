@@ -104,9 +104,12 @@ function getSetsByTheme(theme) {
       where: { "$Theme.name$": { [Sequelize.Op.iLike]: `%${theme}%` } },
     })
       .then((data) => {
-        resolve(data);
-      })
-      .catch((err) => {
+        if (data.length > 0) {
+          resolve(data);
+        } else {
+          reject();
+        }
+      }).catch((err) => {
         console.log(err);
         reject("Unable to find requested sets");
       });
@@ -116,13 +119,21 @@ function getSetByNum(setNum) {
   return new Promise(async (resolve, reject) => {
     // const found = sets.find((element) => setNum === element.set_num);
     // found ? resolve(found) : reject("unable to find requested set");
+    try {
+      let found = await Set.findOne({
+        where: { set_num: setNum },
+        include: [Theme],
+      });
 
-    let found = await Set.findAll({
-      where: { set_num: setNum },
-      include: [Theme],
-    });
-
-    found ? resolve(found[0]) : reject("Unable to find requested set");
+      if (found) {
+        resolve(found);
+      } else {
+        reject("Unable to find requested set");
+      }
+    } catch (error) {
+      console.error(error);
+      reject("An error occurred");
+    }
   });
 }
 
