@@ -74,8 +74,6 @@ app.get("/lego/addSet", async (req, res) => {
     res.render("addSet", { themes: themeData });
   } catch (error) {
     console.log(error);
-    // Handle the error appropriately, for example, by rendering an error page
-   // res.status(500).render('error', { message: 'Internal Server Error' });
   }
 });
 app.post('/lego/addSet', async(req,res)=>{
@@ -133,11 +131,7 @@ app.use((req, res, next) => {
   // const filepath = path.join(__dirname, "views", "404.html");
 
   //res.render("404");
-  res
-    .status(404)
-    .render("404", {
-      message: "I'm sorry, we're unable to find what you're looking for.",
-    });
+  res.status(404).render("404", {message: "I'm sorry, we're unable to find what you're looking for.",});
 });
 
 legoData
