@@ -170,9 +170,7 @@ function editSet(set_num, setData) {
       if (foundset) {
         await foundset.update(setData);
         resolve();
-      } else {
-        throw new Error("Set not found");
-      }
+      } 
     } catch (err) {
       console.error(err);
       reject(err.message);

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About Me</title>
+    <title>Set</title>
     <link rel="stylesheet" href="/css/main.css" />
   </head>
   <body>
@@ -52,14 +52,15 @@
               >Back</a
             >
           </button>
-          <button>
+          <% if(session.user){ %> <button>
             <a
               class="btn btn-success"
               href="/lego/editSet/<%=sets.set_num %>"
              
               >Edit</a
             >
-          </button>
+          </button> <% } %>
+          
         </div>
       </div>
     </div>
